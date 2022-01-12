@@ -16,7 +16,8 @@ const std::unordered_map<TestMesh, const char*, TestMeshHash> mesh_names {
     std::make_pair<TestMesh, const char*>(TestMesh::A,"A"),
     std::make_pair<TestMesh, const char*>(TestMesh::L,"L"), 
     std::make_pair<TestMesh, const char*>(TestMesh::V,"V"), 
-    std::make_pair<TestMesh, const char*>(TestMesh::_40x10,"40x10"), 
+    std::make_pair<TestMesh, const char*>(TestMesh::_40x10,"40x10"),
+    std::make_pair<TestMesh, const char*>(TestMesh::box_10x20x30,"box_10x20x30"), 
     std::make_pair<TestMesh, const char*>(TestMesh::cube_20x20x20,"cube_20x20x20"), 
     std::make_pair<TestMesh, const char*>(TestMesh::sphere_50mm,"sphere_50mm"), 
     std::make_pair<TestMesh, const char*>(TestMesh::bridge,"bridge"), 
@@ -176,7 +177,58 @@ TriangleMesh mesh(TestMesh m) {
                 Point3(2,3,10) , Point3(9,10,12) , Point3(13,9,12) , Point3(3,1,8) , Point3(11,3,8) , Point3(10,11,8) , Point3(4,10,8) , Point3(6,12,10) , Point3(4,6,10) , 
                 Point3(7,13,12) , Point3(6,7,12) , Point3(7,5,9) , Point3(13,7,9) 
             });
-            break;        
+            break;
+        case TestMesh::box_10x20x30:
+            vertices = {
+                Pointf3(0, 0, 0),
+                Pointf3(10, 0, 0),
+                Pointf3(10, 20, 0),
+                Pointf3(0, 20, 0),
+                Pointf3(0, 0, 30),
+                Pointf3(10, 0, 30),
+                Pointf3(10, 20, 30),
+                Pointf3(0, 20, 30)
+            };
+            facets = {
+                Point3(3, 2, 1),
+                Point3(1, 0, 3),
+                Point3(4, 5, 6),
+                Point3(6, 7, 4),
+                Point3(0, 1, 5),
+                Point3(5, 4, 0),
+                Point3(1, 2, 6),
+                Point3(6, 5, 1),
+                Point3(2, 3, 7),
+                Point3(7, 6, 2),
+                Point3(3, 0, 4),
+                Point3(4, 7, 3)
+            };        
+            break;
+        case TestMesh::box_20x20x10_centered:
+            vertices = {
+                Pointf3(10, 10,  0),
+                Pointf3(-10, -10,  0),
+                Pointf3(-10, 10,  0),
+                Pointf3(10, -10,  0),
+                Pointf3(10, -10,  10),
+                Pointf3(-10, 10,  10),
+                Pointf3(-10, -10,  10),
+                Pointf3(10, 10,  10)
+            };
+            facets = {
+                Point3(0, 1,  2),
+                Point3(1, 0,  3),
+                Point3(4, 5,  6),
+                Point3(5, 4,  7),
+                Point3(0, 4,  3),
+                Point3(4, 0,  7),
+                Point3(4, 1,  3),
+                Point3(1, 4,  6),
+                Point3(5, 1,  6),
+                Point3(1, 5,  2),
+                Point3(5, 0,  2),
+                Point3(0, 5,  7)
+            };
         default:
             break;        
     }
@@ -185,6 +237,10 @@ TriangleMesh mesh(TestMesh m) {
         switch(m) {
             case TestMesh::cube_20x20x20:
                 _mesh = Slic3r::TriangleMesh::make_cube(20,20,20);
+                break;
+            
+                _mesh = Slic3r::TriangleMesh::make_cube(20,20,10);
+                _mesh.translate(Pointf3(-10, -10, 0));
                 break;
             case TestMesh::sphere_50mm:
                 _mesh = Slic3r::TriangleMesh::make_sphere(50, PI / 243.0);

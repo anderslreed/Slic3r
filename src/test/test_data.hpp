@@ -19,6 +19,8 @@ enum class TestMesh {
     L,
     V,
     _40x10,
+    box_10x20x30,
+    box_20x20x10_centered,
     cube_20x20x20,
     sphere_50mm,
     bridge,

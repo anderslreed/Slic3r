@@ -320,6 +320,7 @@ set(UI_TEST_SOURCES
 set(SLIC3R_TEST_SOURCES
     ${TESTDIR}/test_harness.cpp
     ${TESTDIR}/test_data.cpp
+    ${TESTDIR}/io_test_helper.cpp
     ${TESTDIR}/libslic3r/test_config.cpp
     ${TESTDIR}/libslic3r/test_fill.cpp
     ${TESTDIR}/libslic3r/test_flow.cpp

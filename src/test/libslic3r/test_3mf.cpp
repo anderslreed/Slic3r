@@ -1,19 +1,4 @@
-#include <catch.hpp>
-#include <test_options.hpp>
-#include "Model.hpp"
-#include "TMF.hpp"
+#include "io_test_helper.hpp"
 
-
-using namespace Slic3r;
-
-SCENARIO("Reading 3mf file") {
-    GIVEN("umlauts in the path of the file") {
-        auto model {new Slic3r::Model()};
-        WHEN("3mf model is read") {
-            auto ret = Slic3r::IO::TMF::read(testfile("test_3mf/Geräte/box.3mf"),model);
-            THEN("read should not return 0") {
-                REQUIRE(ret == 1);
-            }
-        }
-    }
-}
+READ_TEST("3mf", "test_3mf/Geräte/box.3mf", Slic3r::IO::TMF::read, box_10x20x30)
+WRITE_TEST("3mf", Slic3r::IO::TMF::read, Slic3r::IO::TMF::write, box_10x20x30)
