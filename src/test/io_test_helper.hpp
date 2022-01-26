@@ -11,8 +11,8 @@
 #include "TriangleMesh.hpp"
 
 // The guts of a read/verify test
-#define _READ_TEST(NAME, FILEPATH, READ_FCN, MODEL, MESH_NAME) \
-    int res = READ_FCN(testfile(FILEPATH), MODEL); \
+#define _READ_TEST(NAME, FILEPATH, IO_NAME, MODEL, MESH_NAME) \
+    int res = Slic3r::IO::IO_NAME::read(testfile(FILEPATH), MODEL); \
     THEN("read should not return 0") { \
         REQUIRE(res == 1); \
     } \
@@ -30,18 +30,18 @@
     }
 
 // Read from FILEPATH using READ_FCN, and compare the resulting mesh to the mesh specified by MESH_NAME
-#define READ_TEST(NAME, FILEPATH, READ_FCN, MESH_NAME) \
+#define READ_TEST(NAME, FILEPATH, IO_NAME, MESH_NAME) \
     SCENARIO("Reading "  NAME " file") { \
         Slic3r::Model* read_model = new Slic3r::Model(); \
         GIVEN("Input file " FILEPATH ", Expected mesh " #MESH_NAME) { \
             WHEN(NAME " model is read") { \  
-                _READ_TEST(NAME, FILEPATH, READ_FCN, read_model, MESH_NAME) \
+                _READ_TEST(NAME, FILEPATH, IO_NAME, read_model, MESH_NAME) \
             } \
         } \
     }
 
 // Write the mesh specified by mesh_name to a temp file, then read that file and check the result
-#define WRITE_TEST(NAME, READ_FCN, WRITE_FCN, MESH_NAME) \
+#define WRITE_TEST(NAME, IO_NAME, MESH_NAME) \
     SCENARIO("Writing " NAME " file") { \
         boost::filesystem::create_directory(testfile("tmp")); \
         Slic3r::Model* write_model = new Model(); \
@@ -51,11 +51,11 @@
         obj->add_instance(); \
         GIVEN("Mesh " #MESH_NAME) { \         
             WHEN(NAME " model is read and written as temp file") { \
-                bool ret = WRITE_FCN(*write_model, testfile("tmp/target")); \
+                bool ret = Slic3r::IO::IO_NAME::write(*write_model, testfile("tmp/target")); \
                 THEN("write should not return 0") { \
                     REQUIRE(ret == true); \
                 } \ 
-                _READ_TEST(NAME, "tmp/target", READ_FCN, read_model, MESH_NAME) \
+                _READ_TEST(NAME, "tmp/target", IO_NAME, read_model, MESH_NAME) \
             } \
         } \
         boost::filesystem::remove(testfile("tmp/target")); \

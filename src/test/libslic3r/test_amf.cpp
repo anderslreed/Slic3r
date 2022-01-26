@@ -8,10 +8,10 @@
 using namespace Slic3r;
 using namespace std::literals::string_literals;
 
-READ_TEST("Compressed AMF file of a 20mm cube", "test_amf/20mmbox_deflated.amf", Slic3r::IO::AMF::read, box_20x20x10_centered)
-READ_TEST("Compressed AMF file of a 20mm cube with some subdirectories", "test_amf/20mmbox_deflated-in_directories.amf", Slic3r::IO::AMF::read, box_20x20x10_centered)
-READ_TEST("Compressed AMF file of a 20mm cube with multiple files in the archive", "test_amf/20mmbox_deflated-mult_files.amf", Slic3r::IO::AMF::read, box_20x20x10_centered)
-READ_TEST("Uncompressed AMF file of a 20mm cube", "test_amf/20mmbox.amf", Slic3r::IO::AMF::read, box_20x20x10_centered)
+READ_TEST("Compressed AMF file of a 20mm cube", "test_amf/20mmbox_deflated.amf", AMF, box_20x20x10_centered)
+READ_TEST("Compressed AMF file of a 20mm cube with some subdirectories", "test_amf/20mmbox_deflated-in_directories.amf", AMF, box_20x20x10_centered)
+READ_TEST("Compressed AMF file of a 20mm cube with multiple files in the archive", "test_amf/20mmbox_deflated-mult_files.amf", AMF, box_20x20x10_centered)
+READ_TEST("Uncompressed AMF file of a 20mm cube", "test_amf/20mmbox.amf", AMF, box_20x20x10_centered)
 
 SCENARIO("Uncompressed AMF file of a 20mm cube") {
     auto model {new Slic3r::Model()};
