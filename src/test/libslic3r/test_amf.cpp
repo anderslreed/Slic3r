@@ -2,7 +2,7 @@
 #include <test_options.hpp>
 #include "Model.hpp"
 #include "IO.hpp"
-#include "io_test_helper.hpp"
+#include "io_test_macros.hpp"
 
 
 using namespace Slic3r;
