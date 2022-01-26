@@ -37,7 +37,7 @@ class CoolingBuffer {
     float                       _min_print_speed;
 };
 
-#ifdef SLIC3R_TEST
+#ifdef BUILD_TEST
 void apply_speed_factor(std::string &line, float speed_factor, float min_print_speed);
 #endif
 
