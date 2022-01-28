@@ -22,6 +22,7 @@
     THEN("resulting mesh is correct") { \
         Slic3r::TriangleMesh expected = Slic3r::Test::mesh(Slic3r::Test::TestMesh::MESH_NAME); \
         TriangleMesh result = read_model->objects[0]->volumes[0]->mesh; \
+        result.repair(); \
         REQUIRE(result.facets().size() > 0); \
         REQUIRE(Slic3r::Test::meshes_equal(&result, &expected)); \
     }
